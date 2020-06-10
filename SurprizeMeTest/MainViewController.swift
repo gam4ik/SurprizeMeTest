@@ -11,6 +11,8 @@ import CountryPickerView
 
 class MainViewController: UIViewController {
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     let cpv = CountryPickerView()
     
     let user = User(id: 123, name: "Anitta", phone: "098 765-43-21", email: "anitta@gmail.com")
@@ -19,6 +21,9 @@ class MainViewController: UIViewController {
     @IBOutlet weak var greetingLabel: UILabel!
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var confirmButton: UIButton!
+    @IBOutlet weak var signOutButton: UIButton!
+    @IBOutlet weak var signOutLabel: UILabel!
+    @IBOutlet weak var buttonsStackView: UIStackView!
     
     private let url = "https://app.surprizeme.ru/media/store/1186_i1KaYnj_8DuYTzc.jpg"
     
@@ -83,6 +88,41 @@ class MainViewController: UIViewController {
         phoneTextField.leftView = nil
         phoneTextField.text = nil
         phoneTextField.placeholder = "Your e-mail"
+        signOutButton.isHidden = true
+        signOutLabel.text = "or use another way to sign in"
+        
+        let phoneButton = creatButton(title: "Sign in with phone number", image: UIImage(systemName: "phone")!)
+        phoneButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -55, bottom: 0, right: 40)
+        buttonsStackView.addArrangedSubview(phoneButton)
+        
+        let googleButton = creatButton(title: "Sign in with Google", image: UIImage(systemName: "eye.fill")!)
+        googleButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -80, bottom: 0, right: 70)
+        buttonsStackView.addArrangedSubview(googleButton)
+        
+        let appleButton = creatButton(title: "Sign in with Apple", image: UIImage(systemName: "eye.fill")!)
+        appleButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -80, bottom: 0, right: 80)
+        buttonsStackView.addArrangedSubview(appleButton)
+        
+        let facebookButton = creatButton(title: "Sign in with Facebook", image: UIImage(systemName: "eye.fill")!)
+        facebookButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -63, bottom: 0, right: 70)
+        buttonsStackView.addArrangedSubview(facebookButton)
+        
+        buttonsStackView.isHidden = false
+    }
+    
+    private func creatButton(title: String, image: UIImage) -> UIButton {
+        let button = UIButton()
+        button.titleLabel?.font = .boldSystemFont(ofSize: 15)
+        button.setTitle(title, for: .normal)
+        button.setImage(image, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.tintColor = .black
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 3.0
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        return button
     }
     
     private func registerForKeyboardNotifications() {
@@ -155,5 +195,9 @@ extension MainViewController: CountryPickerViewDelegate, CountryPickerViewDataSo
     func sectionTitleLabelColor(in countryPickerView: CountryPickerView) -> UIColor? {
         return .black
     }
+    
+}
+
+extension MainViewController: UIScrollViewDelegate {
     
 }
