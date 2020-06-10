@@ -8,13 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+extension UIViewController {
+    func addTapGestureToHideKeyboard() {
+        let tapGesture = UITapGestureRecognizer(target: view, action: #selector(view.endEditing))
+        view.addGestureRecognizer(tapGesture)
     }
-
-
 }
 
+extension UIViewController: UITextFieldDelegate {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
